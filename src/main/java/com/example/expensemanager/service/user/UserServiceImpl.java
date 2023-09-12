@@ -3,8 +3,11 @@ package com.example.expensemanager.service.user;
 import com.example.expensemanager.dao.user.UserDAO;
 import com.example.expensemanager.entity.User;
 import jakarta.transaction.Transactional;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -16,8 +19,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUser(User user) {
-        return userDAO.findUser(user);
+    public String authenticateUser(User user) {
+        User theUser =  userDAO.findUser(user);
+        if(theUser == null) {
+            return "Invalid Credentials";
+        }
+        return "Valid User";
     }
 
     @Override
@@ -36,4 +43,14 @@ public class UserServiceImpl implements UserService{
     public User deleteUser(User user) {
         return userDAO.deleteUser(user);
     }
+
+//    @Override
+//    public User authenticateUser(User user) {
+//
+//        User opUser = userDAO.findUser(user.getId());
+//        if(user == null) {
+//            return null;
+//        }
+//
+//    }
 }
