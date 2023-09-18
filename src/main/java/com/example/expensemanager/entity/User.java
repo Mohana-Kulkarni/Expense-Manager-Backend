@@ -3,9 +3,12 @@ package com.example.expensemanager.entity;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+import java.util.Set;
+
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +20,27 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @ManyToMany
+    private Set<Role> roles;
+
+    private boolean enabled;
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
     public User() {
 

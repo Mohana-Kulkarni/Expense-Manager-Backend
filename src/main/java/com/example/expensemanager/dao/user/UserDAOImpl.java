@@ -23,11 +23,12 @@ public class UserDAOImpl implements UserDAO {
                 "where u.email = :email", User.class);
         query.setParameter("email" , username);
         User theUser = query.getSingleResult();
+        if(theUser == null) {
+            return null;
+        }
         BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-        if(theUser != null) {
-            if(bcrypt.matches(user.getPassword(), theUser.getPassword())) {
-                return user;
-            }
+        if (bcrypt.matches(user.getPassword(), theUser.getPassword())) {
+            return user;
         }
         return null;
     }
@@ -38,6 +39,7 @@ public class UserDAOImpl implements UserDAO {
         String encryptedPwd = bcrypt.encode(user.getPassword());
         user.setPassword(encryptedPwd);
         entityManager.persist(user);
+
     }
 
     @Override
@@ -52,6 +54,15 @@ public class UserDAOImpl implements UserDAO {
             return null;
         }
         entityManager.remove(user);
+        return theUser;
+    }
+
+    @Override
+    public User getUser(int id) {
+        User theUser = entityManager.find(User.class, id);
+        if(theUser == null) {
+            return null;
+        }
         return theUser;
     }
 }

@@ -10,5 +10,7 @@ public interface UserService {
 
     User deleteUser(User user);
 
+    User getUserById(int id);
+
 //    User authenticateUser(User user);
 }

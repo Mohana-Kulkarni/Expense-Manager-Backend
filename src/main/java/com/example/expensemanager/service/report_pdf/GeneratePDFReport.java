@@ -86,7 +86,8 @@ public class GeneratePDFReport {
             Font totalFont = FontFactory.getFont(FontFactory.TIMES_BOLD, 16);
             Paragraph paragraph1 = new Paragraph("Total : " + Integer.toString(total), totalFont);
             paragraph1.setAlignment(Element.ALIGN_LEFT);
-            paragraph1.setSpacingBefore(10);
+            paragraph1.setSpacingBefore(20);
+            paragraph1.setIndentationLeft(50);
 
 
             document.add(paragraph1);
